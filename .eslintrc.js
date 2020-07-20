@@ -10,18 +10,18 @@ module.exports = {
   parserOptions: {
     parser: 'babel-eslint',
   },
-  'settings': {
+  settings: {
     'import/resolver': {
-      'webpack': {
-        'config': './vue.config.js',
+      webpack: {
+        config: './vue.config.js',
       },
     },
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'semi': [2, 'never'], // 结尾不加分号
-    'linebreak-style': ['off','windows'],
+    semi: [2, 'never'], // 结尾不加分号
+    'linebreak-style': ['off', 'windows'],
     'arrow-parens': 0,
     'array-callback-return': 0,
     'no-param-reassign': 0,
@@ -33,7 +33,7 @@ module.exports = {
     'operator-assignment': 0,
     'no-undef': 0,
     'func-names': 0,
-    'radix': 0,
+    radix: 0,
     'no-mixed-operators': 0,
   },
-};
+}
