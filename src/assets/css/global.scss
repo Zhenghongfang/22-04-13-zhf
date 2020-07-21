@@ -2,33 +2,3 @@ html,body{
 	height: 100%;
 	margin: 0;
 }
-
-.equipContent {
-  background: #fff;
-  padding: 24px 0 24px 24px;
-  text-align: left;
-}
-
-/* 表格上方表单 */
-.search-form {
-  .el-form {
-    margin: 0 25px;
-    padding: 20px;
-    border: 1px solid #ebeef5;
-    .el-form-item {
-      margin: 0 10px 0 0;
-    }
-  }
-}
-
-#myTable {
-    margin-top: 20px;
-}
-
-.el-scrollbar__wrap {
-	overflow-x: hidden;
-}
-
-.el-select-dropdown .el-scrollbar {
-  padding-bottom: 17px;
-}

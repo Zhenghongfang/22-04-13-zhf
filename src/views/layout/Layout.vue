@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-container>
-      <el-aside>
-        <div class="company">
-          <img :src="logo">
+      <el-aside width = "210px">
+        <div>
+          <img :src = "logo">
           <span>数矿云平台</span>
         </div>
         <sidebar></sidebar>

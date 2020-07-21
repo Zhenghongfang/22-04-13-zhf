@@ -20,6 +20,11 @@ const routes = [
     component: () => layout,
     meta: { title: '首页' },
   }, {
+    path: '/table',
+    name: 'Table',
+    component: () => layout,
+    meta: { title: '首页' },
+  }, {
     path: '/charts',
     name: 'Charts',
     component: () => layout,
