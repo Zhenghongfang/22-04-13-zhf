@@ -15,20 +15,56 @@ const routes = [
     component: () => import('@/views/login/Login.vue'),
     meta: { title: '登录' },
   }, {
-    path: '/home',
-    name: 'Home',
+    path: '/',
+    name: 'Layout',
     component: () => layout,
-    meta: { title: '首页' },
+    children: [
+      {
+        path: '/home',
+        name: 'Home',
+        component: () => import('../views/home/Home.vue'),
+        meta: { title: '首页' },
+      },
+    ],
   }, {
     path: '/table',
     name: 'Table',
+    redirect: '/table/common',
     component: () => layout,
-    meta: { title: '首页' },
+    meta: { title: '表格' },
+    children: [{
+      path: '/table/common',
+      name: 'Common',
+      component: () => import('@/views/table/Common.vue'),
+      meta: { title: '通用表格' },
+    }, {
+      path: '/table/test',
+      name: 'Test',
+      component: () => import('@/views/table/Test.vue'),
+      meta: { title: '测试表格' },
+    }],
   }, {
     path: '/charts',
     name: 'Charts',
+    redirect: '/charts/bar',
     component: () => layout,
     meta: { title: '图表' },
+    children: [{
+      path: '/charts/bar',
+      name: 'Bar',
+      component: () => import('@/views/charts/Bar.vue'),
+      meta: { title: '柱状图' },
+    }, {
+      path: '/charts/pie',
+      name: 'Pie',
+      component: () => import('@/views/charts/Pie.vue'),
+      meta: { title: '饼图' },
+    }, {
+      path: '/charts/line',
+      name: 'Line',
+      component: () => import('@/views/charts/Line.vue'),
+      meta: { title: '折线图' },
+    }],
   },
 ]
 

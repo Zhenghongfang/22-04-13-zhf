@@ -10,6 +10,18 @@
       </el-aside>
       <el-container>
         <el-header>
+          <div class="header-info">
+            <!-- <i :class="[ collapse ? 'el-icon-s-unfold' : 'el-icon-s-fold' ]">
+            </i> -->
+            <i class="header-info-icon-toggle el-icon-s-unfold"></i>
+            <!-- <el-breadcrumb>
+              <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
+              <el-breadcrumb-item>{{ currentRouter.meta.title }}</el-breadcrumb-item>
+            </el-breadcrumb> -->
+          </div>
+          <div class="header-tag">
+            sdf
+          </div>
         </el-header>
         <el-main>
           <router-view/>
@@ -70,6 +82,27 @@ export default {
         width: 30px;
         height: 30px;
         padding: 0 10px 0 20px;
+      }
+    }
+    // header
+    .el-header {
+      padding: 0;
+      .header-info {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        box-shadow: 0 1px 4px rgba(0,21,41,.08);
+        &-icon-toggle {
+          padding: 0 15px;
+          font-size: 28px;
+          cursor: pointer;
+        }
+        .el-breadcrumb {
+          font-size: 14px;
+        }
+      }
+      .header-tag {
+        height: 30px;
       }
     }
   }
