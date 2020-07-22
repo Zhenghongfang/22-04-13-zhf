@@ -3,6 +3,7 @@
     <el-menu
       background-color='#304156'
       text-color='#ffffff'
+      :default-active = 'currentRouter.path'
       :unique-opened=true
       router>
       <template v-for="item in menulist">
@@ -76,6 +77,11 @@ export default {
         }],
       }],
     }
+  },
+  computed: {
+    currentRouter() {
+      return this.$route
+    },
   },
 }
 </script>
