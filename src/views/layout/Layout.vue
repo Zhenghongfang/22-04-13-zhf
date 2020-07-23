@@ -32,21 +32,9 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import {
-  Container,
-  Header,
-  Aside,
-  Main,
-} from 'element-ui'
 import Sidebar from './components/Sidebar.vue'
 
 const logo = require('../../assets/logo.png')
-
-Vue.use(Container)
-Vue.use(Header)
-Vue.use(Aside)
-Vue.use(Main)
 
 export default {
   data() {

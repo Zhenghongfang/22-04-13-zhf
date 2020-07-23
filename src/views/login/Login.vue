@@ -7,7 +7,7 @@
 <script>
 import Vue from 'vue'
 import { Button } from 'element-ui'
-import api from '@/utils/api'
+import api from '@/api/charts'
 
 Vue.use(Button)
 
@@ -25,7 +25,6 @@ export default {
       this.$router.push({
         path: '/home',
       })
-      console.log('登录')
     },
   },
 }
