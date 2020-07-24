@@ -1,31 +1,32 @@
 <template>
   <div class="table-content">
     <el-table
-      border
-      v-loading="loading"
-      element-loading-text="拼命加载中"
-      element-loading-spinner="el-icon-loading"
-      @sort-change = "sortByColumns"
       :max-height = "screenHeight"
       :data = "sourceData"
-      @selection-change = "selectionChange">
-      <el-table-column
-        v-for="(item, index) in tableColumn"
-        :key="index"
-        :type="item.type"
-        :formatter="item.formatter"
-        :sortable = "item.sortable"
-        :width="item.width"
-        :prop="item.prop"
-        :label="item.label">
-      </el-table-column>
+      @sort-change = "sortByColumns"
+      @selection-change = "selectionChange"
+      v-loading="loading"
+      element-loading-text = "拼命加载中"
+      element-loading-spinner = "el-icon-loading"
+      border>
+      <template v-for="(column, index) in tableColumn">
+        <el-table-column v-if="column.render" :key="index" v-bind="column">
+          <template slot-scope="scope">
+            <extend :render="column.render" :params="scope"></extend>
+          </template>
+        </el-table-column>
+
+        <el-table-column v-else :key="index" v-bind="column">
+        </el-table-column>
+      </template>
       <slot></slot>
-      <el-table-column v-if="operate.length === 0" label="操作" width="85">
+      <el-table-column v-if="operate.length !== 0" label="操作" width="85">
         <template slot-scope="scope">
           <el-button
             @click="updateRowData(scope.row)"
             type="text"
-            size="small">修改
+            size="small">
+              修改
           </el-button>
           <el-button
             @click="deleteRowData(scope.row.id, scope.row)"
@@ -50,7 +51,8 @@
 </template>
 
 <script>
-import api from '../utils/api'
+import api from '@/utils/api'
+import extend from './extend'
 
 export default {
   data() {
@@ -65,6 +67,7 @@ export default {
       loading: false,
     }
   },
+  components: { extend },
   props: {
     // 表格列
     tableColumn: {
@@ -80,7 +83,10 @@ export default {
     deleteMethod: {
       type: String,
     },
-    // 操作栏
+    /*
+     * 操作栏
+     * 0: 修改, 1: 删除
+     */
     operate: {
       type: Array,
       default: () => [],
@@ -96,7 +102,7 @@ export default {
     },
   },
   created() {
-    console.log(this.test)
+    console.log(this.operate)
   },
   mounted() {
     this.getSourceData(this.$parent.searchParams || {})
@@ -193,24 +199,14 @@ export default {
       this.checkedData = selection
     },
     // 删除当前行数据
-    async deleteRowData(id, row) {
+    async deleteRowData(id) {
       try {
         await this.$confirm('确定要删除选中的记录?', '确认信息', {
           closeOnClickModal: false,
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         })
-        // 角色管理
-        if (this.deleteMethod === 'deleteRole') {
-          id = row.roleId
-        }
-        let params = { id }
-
-        if (this.deleteMethod === 'deleteDept') {
-          params = {
-            deptId: row.deptId,
-          }
-        }
+        const params = { id }
         const res = await api[this.deleteMethod](params)
         if (res.code === 0) {
           if (this.sourceData.length === 1 && this.currentPage > 1) {
@@ -234,50 +230,6 @@ export default {
             message: '删除失败',
           })
         }
-      }
-    },
-    // 删除多行
-    async deleteData() {
-      const checkIds = []
-      this.checkedData.map((item) => {
-        checkIds.push(item.id)
-      })
-      if (checkIds.length > 0) {
-        try {
-          await this.$confirm('确定要删除选中的记录?', '确认信息', {
-            closeOnClickModal: false,
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-          })
-          const res = await api[this.deleteMoreMethod](checkIds)
-          if (res.code === 0) {
-            if (this.sourceData.length === 1 && this.currentPage > 1) {
-              this.currentPage -= 1
-            }
-            this.$message({
-              type: 'success',
-              message: '删除成功',
-            })
-            this.getSourceData(this.$parent.searchParams)
-          } else {
-            this.$message({
-              type: 'error',
-              message: res.msg,
-            })
-          }
-        } catch (e) {
-          if (e !== 'cancel') {
-            this.$message({
-              type: 'error',
-              message: '删除失败',
-            })
-          }
-        }
-      } else {
-        this.$message({
-          type: 'warnning',
-          message: '请先选择数据',
-        })
       }
     },
     // 修改当前行数据
