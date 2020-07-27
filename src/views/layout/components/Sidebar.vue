@@ -4,6 +4,7 @@
       background-color='#304156'
       text-color='#ffffff'
       :default-active = 'currentRoute.path'
+      :collapse = 'collapsed'
       :unique-opened=true
       router>
       <template v-for="item in menulist">
@@ -69,6 +70,7 @@ export default {
   },
   computed: {
     ...mapState([
+      'collapsed',
       'currentRoute',
     ]),
   },

@@ -1,36 +1,41 @@
 <template>
   <div class="main">
     <el-container>
-      <el-aside width = "210px">
+      <el-aside :width="!collapsed?'210px':'65px'">
         <div class="sidebar-title">
           <img class="sidebar-title-image" :src = "logo">
-          <span>管理系统模板</span>
+          <span v-if="!collapsed">管理系统模板</span>
         </div>
         <sidebar></sidebar>
       </el-aside>
       <el-container>
         <el-header height="auto">
           <div class="header-info">
-            <!-- <i :class="[ collapse ? 'el-icon-s-unfold' : 'el-icon-s-fold' ]">
-            </i> -->
-            <i class="header-info-icon-toggle el-icon-s-unfold"></i>
+            <i
+              class="header-info-icon-toggle"
+              :class="collapsed ? 'el-icon-s-unfold' : 'el-icon-s-fold' "
+              @click="toggleSideBar">
+            </i>
             <!-- <el-breadcrumb>
               <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
               <el-breadcrumb-item>{{ currentRouter.meta.title }}</el-breadcrumb-item>
             </el-breadcrumb> -->
           </div>
           <div class="header-tag">
-            <el-tag
-              class="header-tag-item"
-              v-for = "item in tagList"
-              :key = item.path
-              :class="currentRoute.path === item.path ? 'header-tag-item-active' : ''"
-              :closable="item.path === '/home' ? false : true"
-              @close="closeTag(item)">
-                <span :class="currentRoute.path === item.path ? 'header-tag-item-cicle' : ''">
-                </span>
-                {{ item.title }}
-            </el-tag>
+            <el-scrollbar>
+              <el-tag
+                class="header-tag-item"
+                v-for = "item in tagList"
+                :key = item.path
+                :class="currentRoute.path === item.path ? 'header-tag-item-active' : ''"
+                :closable="item.path === '/home' ? false : true"
+                @click="chooseTag(item)"
+                @close="closeTag(item)">
+                  <span :class="currentRoute.path === item.path ? 'header-tag-item-cicle' : ''">
+                  </span>
+                  {{ item.title }}
+              </el-tag>
+            </el-scrollbar>
           </div>
         </el-header>
         <el-main>
@@ -58,11 +63,17 @@ export default {
   },
   computed: {
     ...mapState([
+      'collapsed',
       'tagList',
       'currentRoute',
     ]),
   },
   methods: {
+    // 侧边栏状态切换
+    toggleSideBar() {
+      this.$store.commit('changeCollapse')
+    },
+
     // 关闭顶部tag标签
     closeTag(item) {
       const { currentRoute } = this.$store.state
@@ -70,6 +81,13 @@ export default {
         path: '/home',
       })
       this.$store.commit('removeTag', item)
+    },
+
+    // 点击选择tag标签
+    chooseTag(item) {
+      this.$router.push({
+        path: item.path,
+      })
     },
   },
 }
@@ -111,6 +129,7 @@ export default {
           font-size: 14px;
         }
       }
+      // 头部tag标签
       .header-tag {
         height: 40px;
         box-shadow: 0 1px 3px 0 rgba(0,0,0,.12), 0 0 3px 0 rgba(0,0,0,.04);
@@ -121,8 +140,14 @@ export default {
             background-color: #b4bccc;
           }
         }
+        .el-scrollbar {
+          height: 100%;
+          ::v-deep .el-scrollbar__view {
+            white-space: nowrap;
+          }
+        }
         &>:first-child {
-          margin-left: 18px;
+          margin-left: 10px;
         }
         &-item {
           background-color: #FFFFFF;
@@ -132,6 +157,7 @@ export default {
           line-height: 26px;
           margin: 8px 0 8px 6px;
           border-radius: 0;
+          cursor:pointer
         }
         &-item-active {
           background-color: #42b983;

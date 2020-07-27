@@ -22,7 +22,8 @@ module.exports = {
     port: 8000,
     proxy: {
       '/api': {
-        target: 'http://192.168.0.202',
+        // target: 'http://192.168.0.202',
+		    target: 'http://www.akuang.net',
         ws: true,
         changOrigin: true,
         pathRewrite: {

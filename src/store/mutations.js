@@ -1,4 +1,5 @@
 export default {
+  // 改变展开收起状态
   changeCollapse(state) {
     state.collapsed = !state.collapsed
   },

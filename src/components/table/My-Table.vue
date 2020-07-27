@@ -112,7 +112,7 @@ export default {
       const searchFormHeight = document.getElementsByClassName('search-form')[0]
         ? document.getElementsByClassName('search-form')[0].clientHeight
         : 0
-      this.screenHeight = window.innerHeight - 180 - searchFormHeight
+      this.screenHeight = window.innerHeight - 210 - searchFormHeight
     }
 
     this.$nextTick(() => {

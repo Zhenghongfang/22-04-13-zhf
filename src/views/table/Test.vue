@@ -120,7 +120,6 @@ export default {
       this.searchParams.createUser = val.name
     },
     queryByParams() {
-      console.log(this.searchParams);
       [this.searchParams.startTime, this.searchParams.endTime] = this.countTimeValue || []
       this.$refs.skkjTable.currentPage = 1
       this.$refs.skkjTable.pageSize = 10
@@ -153,22 +152,6 @@ export default {
     async getSetUser() {
       const res = await api.getSetUser()
       this.setUserList = res
-    },
-    // 导出报表
-    async exportTicketCount() {
-      [this.searchParams.startTime, this.searchParams.endTime] = this.countTimeValue
-      const res = await api.exportTicketCount(this.searchParams)
-      console.log(res)
-      const blob = new Blob([res], { type: 'application/vnd.ms-excel;charset=utf-8' })
-      const downloadElement = document.createElement('a')
-      const href = window.URL.createObjectURL(blob)
-      downloadElement.href = href
-      console.log(href)
-      downloadElement.download = '计量仪计数表.xls'
-      document.body.appendChild(downloadElement)
-      downloadElement.click()
-      document.body.removeChild(downloadElement)
-      window.URL.revokeObjectURL(href)
     },
   },
 }
