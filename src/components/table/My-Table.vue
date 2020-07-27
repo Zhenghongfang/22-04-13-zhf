@@ -102,7 +102,7 @@ export default {
     },
   },
   created() {
-    console.log(this.operate)
+    // console.log(this.operate)
   },
   mounted() {
     this.getSourceData(this.$parent.searchParams || {})

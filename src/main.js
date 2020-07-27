@@ -6,7 +6,7 @@ import store from './store'
 
 import '@/assets/css/global.scss'
 
-require('./mock/mock.js')
+// require('./mock/mock.js')
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

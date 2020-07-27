@@ -3,7 +3,7 @@
     <el-menu
       background-color='#304156'
       text-color='#ffffff'
-      :default-active = 'currentRouter.path'
+      :default-active = 'currentRoute.path'
       :unique-opened=true
       router>
       <template v-for="item in menulist">
@@ -32,18 +32,7 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import {
-  Scrollbar,
-  Menu,
-  Submenu,
-  MenuItem,
-} from 'element-ui'
-
-Vue.use(Scrollbar)
-Vue.use(Menu)
-Vue.use(Submenu)
-Vue.use(MenuItem)
+import { mapState } from 'vuex'
 
 export default {
   data() {
@@ -79,9 +68,9 @@ export default {
     }
   },
   computed: {
-    currentRouter() {
-      return this.$route
-    },
+    ...mapState([
+      'currentRoute',
+    ]),
   },
 }
 </script>

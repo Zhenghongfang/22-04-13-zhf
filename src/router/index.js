@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 
 const layout = import(/* webpackChunkName: "about" */ '@/views/layout/Layout.vue')
 
@@ -76,5 +77,15 @@ const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
+
+// 新增顶部tag标签
+router.afterEach(to => {
+  const currentRoute = {
+    path: to.path,
+    title: to.meta.title,
+  }
+  store.commit('addTag', currentRoute)
+  store.commit('currentRoute', currentRoute)
+})
 
 export default router

@@ -38,7 +38,6 @@
           <el-button @click="queryByParams" icon="el-icon-search" type="primary">查询</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button @click='exportTicketCount'>sss</el-button>
           <my-export-button
             :params="searchParams"
             :exportMethod="'exportTicketCount'"

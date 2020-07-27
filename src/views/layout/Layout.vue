@@ -9,7 +9,7 @@
         <sidebar></sidebar>
       </el-aside>
       <el-container>
-        <el-header>
+        <el-header height="auto">
           <div class="header-info">
             <!-- <i :class="[ collapse ? 'el-icon-s-unfold' : 'el-icon-s-fold' ]">
             </i> -->
@@ -20,7 +20,17 @@
             </el-breadcrumb> -->
           </div>
           <div class="header-tag">
-            sdf
+            <el-tag
+              class="header-tag-item"
+              v-for = "item in tagList"
+              :key = item.path
+              :class="currentRoute.path === item.path ? 'header-tag-item-active' : ''"
+              :closable="item.path === '/home' ? false : true"
+              @close="closeTag(item)">
+                <span :class="currentRoute.path === item.path ? 'header-tag-item-cicle' : ''">
+                </span>
+                {{ item.title }}
+            </el-tag>
           </div>
         </el-header>
         <el-main>
@@ -32,6 +42,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Sidebar from './components/Sidebar.vue'
 
 const logo = require('../../assets/logo.png')
@@ -45,9 +56,20 @@ export default {
   components: {
     Sidebar,
   },
+  computed: {
+    ...mapState([
+      'tagList',
+      'currentRoute',
+    ]),
+  },
   methods: {
-    test() {
-
+    // 关闭顶部tag标签
+    closeTag(item) {
+      const { currentRoute } = this.$store.state
+      currentRoute.path === item.path && this.$router.push({
+        path: '/home',
+      })
+      this.$store.commit('removeTag', item)
     },
   },
 }
@@ -90,7 +112,39 @@ export default {
         }
       }
       .header-tag {
-        height: 30px;
+        height: 40px;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.12), 0 0 3px 0 rgba(0,0,0,.04);
+        ::v-deep .el-icon-close {
+          color: #b4bccc;
+          &:hover {
+            color: #FFFFFF;
+            background-color: #b4bccc;
+          }
+        }
+        &>:first-child {
+          margin-left: 18px;
+        }
+        &-item {
+          background-color: #FFFFFF;
+          border: 1px solid #d8dce5;
+          color: #000000;
+          height: 28px;
+          line-height: 26px;
+          margin: 8px 0 8px 6px;
+          border-radius: 0;
+        }
+        &-item-active {
+          background-color: #42b983;
+          color: #FFFFFF;
+          border: 1px solid #FFFFFF;
+        }
+        &-item-cicle {
+          display: inline-block;
+          background-color: #FFFFFF;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+        }
       }
     }
   }
