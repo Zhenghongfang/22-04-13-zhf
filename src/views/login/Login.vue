@@ -5,11 +5,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { Button } from 'element-ui'
-import api from '@/api/charts'
-
-Vue.use(Button)
+import Cookies from 'js-cookie'
+import api from '@/utils/api'
 
 export default {
   data() {
@@ -18,10 +15,15 @@ export default {
     }
   },
   methods: {
-    login() {
-      api.query('/news/index', 'type=top&key=123456').then(res => {
-        console.log(res)
+    async login() {
+      // api.query('/news/index', 'type=top&key=123456').then(res => {
+      //   console.log(res)
+      // })
+      const res = await api.login({
+        username: '18800000001',
+        password: '111111',
       })
+      Cookies.set('token', res.token, { expires: new Date(new Date().getTime() + 120 * 60 * 1000) })
       this.$router.push({
         path: '/home',
       })
