@@ -4,6 +4,11 @@ export default {
     state.collapsed = !state.collapsed
   },
 
+  // 根据屏幕宽度菜单状态自适应
+  collapseAdaptive(state, width) {
+    state.collapsed = !(width >= 1200)
+  },
+
   // 新增顶部tag标签
   addTag(state, tagItem) {
     const { tagList } = state

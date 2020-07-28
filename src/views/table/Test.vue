@@ -41,7 +41,7 @@
           <my-export-button
             :params="searchParams"
             :exportMethod="'exportTicketCount'"
-            :reportTitle="'计量仪计数表12'">
+            :reportTitle="'计量仪计数表'">
           </my-export-button>
         </el-form-item>
       </el-form>

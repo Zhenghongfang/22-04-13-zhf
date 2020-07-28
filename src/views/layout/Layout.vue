@@ -68,10 +68,24 @@ export default {
       'currentRoute',
     ]),
   },
+  created() {
+    window.addEventListener('resize', this.resizeHandler)
+
+    // 销毁释放资源
+    this.$once('hook:beforeDestroy', () => {
+      window.removeEventListener('resize', this.resizeHandler)
+    })
+  },
   methods: {
     // 侧边栏状态切换
     toggleSideBar() {
       this.$store.commit('changeCollapse')
+    },
+
+    // 改变屏幕宽度
+    resizeHandler() {
+      const width = document.body.scrollWidth
+      this.$store.commit('collapseAdaptive', width)
     },
 
     // 关闭顶部tag标签
