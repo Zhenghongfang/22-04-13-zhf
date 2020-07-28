@@ -13,7 +13,7 @@ export default {
   addTag(state, tagItem) {
     const { tagList } = state
     const isExist = tagList.some(item => item.path === tagItem.path)
-    isExist || tagList.push(tagItem)
+    isExist || !tagItem.showTag || tagList.push(tagItem)
   },
 
   // 移除顶部tag标签
